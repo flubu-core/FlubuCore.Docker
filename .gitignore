@@ -1,0 +1,6 @@
+.vs/
+FlubuCore.Docker.Tests/bin/
+FlubuCore.Docker.Tests/obj/
+FlubuCore.Docker/Docs/
+FlubuCore.Docker/obj/
+FlubuCore.Docker/bin/
