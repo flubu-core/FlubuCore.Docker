@@ -5,8 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FlubuCore" Version="2.12.11" />
     <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
     <PackageReference Include="YamlDotNet" Version="5.2.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FlubuCore.TaskGenerator">
+      <HintPath>..\Lib\FlubuCore.TaskGenerator.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
