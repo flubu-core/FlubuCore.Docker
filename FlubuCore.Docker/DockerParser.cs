@@ -28,11 +28,18 @@ namespace FlubuCore.Docker
                 };
 
                 var splitedCommands = docker.Command.Split(' ', '-');
-
                 if (splitedCommands.Contains("cp"))
                 {
                     continue;
                 }
+
+                string path = string.Empty;
+                if (splitedCommands.Length > 2)
+                {
+                    path = $"\\{splitedCommands[1].FirstCharToUpper()}";
+                    task.Namespace = $"{task.Namespace}.{splitedCommands[1].FirstCharToUpper()}";
+                }
+
 
                 task.ExecutablePath = splitedCommands[0];
                 var splitedName = splitedCommands.Select(x => x.FirstCharToUpper()).ToList();
@@ -42,7 +49,8 @@ namespace FlubuCore.Docker
                 });
 
                 task.TaskName = $"{string.Join(string.Empty, splitedName)}Task";
-                task.FileName = $"Tasks\\{task.TaskName}.cs";
+                
+                task.FileName = $"Tasks{path}\\{task.TaskName}.cs";
                 if (docker.Options == null)
                 {
                     continue;
