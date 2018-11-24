@@ -4,11 +4,65 @@ using System.Linq;
 using System.Text;
 using FlubuCore.Docker.Models;
 using FlubuCore.TaskGenerator.Models;
+using FlubuCore.TaskGenerator.Models.Extensions;
 
 namespace FlubuCore.Docker
 {
     public class DockerParser
     {
+        public TaskExtensions ToTaskExtensions(List<Task> tasks)
+        {
+            var taskExtensions = new TaskExtensions();
+            taskExtensions.ExtensionName = "DockerTaskExtension";
+            taskExtensions.FileName = "DockerTaskExtension.cs";
+            taskExtensions.Namespace = "FlubuCore.Context.FluentInterface";
+            taskExtensions.Usings.Add("FlubuCore.Context.FluentInterface.Docker");
+            taskExtensions.Usings.Add("FlubuCore.Tasks.Docker");
+            foreach (var task in tasks)
+            {
+                if (string.IsNullOrEmpty(task.Parent))
+                {
+                    taskExtensions.Methods.Add(MapToExtensionMethod(task));
+                }
+                else
+                {
+                    var subExtension = taskExtensions.SubExtensions.FirstOrDefault(x => x.ExtensionName == task.Parent);
+                    if (subExtension != null)
+                    {
+                        subExtension.Methods.Add(MapToExtensionMethod(task));
+                    }
+                    else
+                    {
+                        subExtension = new TaskExtensions
+                        {
+                            ExtensionName = task.Parent,
+                            FileName = $"{task.Parent}.cs",
+                            Namespace = "FlubuCore.Context.FluentInterface.Docker",
+                        };
+
+                        subExtension.Usings.Add($"FlubuCore.Tasks.Docker.{task.Parent}");
+                        subExtension.Methods.Add(MapToExtensionMethod(task));
+                        taskExtensions.SubExtensions.Add(subExtension);
+                    }
+                }
+            }
+
+            taskExtensions.Methods = taskExtensions.Methods.Where(x => !taskExtensions.SubExtensions.Any(y => y.ExtensionName == x.MethodName)).ToList();
+
+            return taskExtensions;
+        }
+
+        private static ExtensionMethod MapToExtensionMethod(Task task)
+        {
+            return new ExtensionMethod
+            {
+                TaskName = task.TaskName,
+                MethodName = task.TaskName.RemoveFromBeginning("Docker").RemoveFromEnd("Task"),
+                Parameters = task.Constructor.Arguments?.Select(x => x.Parameter).Where(x => x != null).ToList(),
+            };
+        }
+
+
         public List<Task> Parse(List<Models.Docker> dockers)
         {
             var tasks = new List<TaskGenerator.Models.Task>();
@@ -38,8 +92,8 @@ namespace FlubuCore.Docker
                 {
                     path = $"\\{splitedCommands[1].FirstCharToUpper()}";
                     task.Namespace = $"{task.Namespace}.{splitedCommands[1].FirstCharToUpper()}";
+                    task.Parent = splitedCommands[1].FirstCharToUpper();
                 }
-
 
                 task.ExecutablePath = splitedCommands[0];
                 var splitedName = splitedCommands.Select(x => x.FirstCharToUpper()).ToList();
