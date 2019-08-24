@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text;
 using FlubuCore.Context;
 using FlubuCore.Tasks;
+using FlubuCore.Tasks.Attributes;
 using FlubuCore.Tasks.Process;
 
 namespace FlubuCore.Tasks.Docker.Service
 {
-     public partial class DockerServiceRollbackTask : ExternalProcessTaskBase<DockerServiceRollbackTask>
+     public partial class DockerServiceRollbackTask : ExternalProcessTaskBase<int, DockerServiceRollbackTask>
      {
         private string _service;
 
@@ -19,7 +20,7 @@ namespace FlubuCore.Tasks.Docker.Service
         public DockerServiceRollbackTask(string service)
         {
             ExecutablePath = "docker";
-            WithArguments("service rollback");
+            WithArgumentsKeyFromAttribute();
 _service = service;
 
         }
@@ -30,18 +31,20 @@ _service = service;
         /// Exit immediately instead of waiting for the service to converge
 
         /// </summary>
+        [ArgKey("detach")]
         public DockerServiceRollbackTask Detach()
         {
-            WithArguments("detach");
+            WithArgumentsKeyFromAttribute();
             return this;
         }
 
         /// <summary>
         /// Suppress progress output
         /// </summary>
+        [ArgKey("quiet")]
         public DockerServiceRollbackTask Quiet()
         {
-            WithArguments("quiet");
+            WithArgumentsKeyFromAttribute();
             return this;
         }
         protected override int DoExecute(ITaskContextInternal context)

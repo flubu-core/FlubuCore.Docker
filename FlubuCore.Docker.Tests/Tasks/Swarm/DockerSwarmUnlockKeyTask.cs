@@ -7,18 +7,19 @@ using System.Collections.Generic;
 using System.Text;
 using FlubuCore.Context;
 using FlubuCore.Tasks;
+using FlubuCore.Tasks.Attributes;
 using FlubuCore.Tasks.Process;
 
 namespace FlubuCore.Tasks.Docker.Swarm
 {
-     public partial class DockerSwarmUnlockKeyTask : ExternalProcessTaskBase<DockerSwarmUnlockKeyTask>
+     public partial class DockerSwarmUnlockKeyTask : ExternalProcessTaskBase<int, DockerSwarmUnlockKeyTask>
      {
         
         
         public DockerSwarmUnlockKeyTask()
         {
             ExecutablePath = "docker";
-            WithArguments("swarm unlock-key");
+            WithArgumentsKeyFromAttribute();
 
         }
 
@@ -27,18 +28,20 @@ namespace FlubuCore.Tasks.Docker.Swarm
         /// <summary>
         /// Only display token
         /// </summary>
+        [ArgKey("quiet")]
         public DockerSwarmUnlockKeyTask Quiet()
         {
-            WithArguments("quiet");
+            WithArgumentsKeyFromAttribute();
             return this;
         }
 
         /// <summary>
         /// Rotate unlock key
         /// </summary>
+        [ArgKey("rotate")]
         public DockerSwarmUnlockKeyTask Rotate()
         {
-            WithArguments("rotate");
+            WithArgumentsKeyFromAttribute();
             return this;
         }
         protected override int DoExecute(ITaskContextInternal context)

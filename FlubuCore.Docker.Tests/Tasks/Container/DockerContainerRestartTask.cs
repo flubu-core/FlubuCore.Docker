@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text;
 using FlubuCore.Context;
 using FlubuCore.Tasks;
+using FlubuCore.Tasks.Attributes;
 using FlubuCore.Tasks.Process;
 
 namespace FlubuCore.Tasks.Docker.Container
 {
-     public partial class DockerContainerRestartTask : ExternalProcessTaskBase<DockerContainerRestartTask>
+     public partial class DockerContainerRestartTask : ExternalProcessTaskBase<int, DockerContainerRestartTask>
      {
         private string[] _container;
 
@@ -19,7 +20,7 @@ namespace FlubuCore.Tasks.Docker.Container
         public DockerContainerRestartTask(params string[] container)
         {
             ExecutablePath = "docker";
-            WithArguments("container restart");
+            WithArgumentsKeyFromAttribute();
 _container = container;
 
         }
@@ -29,9 +30,10 @@ _container = container;
         /// <summary>
         /// Seconds to wait for stop before killing the container
         /// </summary>
+        [ArgKey("time")]
         public DockerContainerRestartTask Time(int time)
         {
-            WithArgumentsValueRequired("time", time.ToString());
+            WithArgumentsKeyFromAttribute(time.ToString());
             return this;
         }
         protected override int DoExecute(ITaskContextInternal context)

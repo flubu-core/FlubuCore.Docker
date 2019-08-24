@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text;
 using FlubuCore.Context;
 using FlubuCore.Tasks;
+using FlubuCore.Tasks.Attributes;
 using FlubuCore.Tasks.Process;
 
 namespace FlubuCore.Tasks.Docker.Swarm
 {
-     public partial class DockerSwarmJoinTokenTask : ExternalProcessTaskBase<DockerSwarmJoinTokenTask>
+     public partial class DockerSwarmJoinTokenTask : ExternalProcessTaskBase<int, DockerSwarmJoinTokenTask>
      {
         private string _worker;
 
@@ -19,7 +20,7 @@ namespace FlubuCore.Tasks.Docker.Swarm
         public DockerSwarmJoinTokenTask(string worker)
         {
             ExecutablePath = "docker";
-            WithArguments("swarm join-token");
+            WithArgumentsKeyFromAttribute();
 _worker = worker;
 
         }
@@ -29,18 +30,20 @@ _worker = worker;
         /// <summary>
         /// Only display token
         /// </summary>
+        [ArgKey("quiet")]
         public DockerSwarmJoinTokenTask Quiet()
         {
-            WithArguments("quiet");
+            WithArgumentsKeyFromAttribute();
             return this;
         }
 
         /// <summary>
         /// Rotate join token
         /// </summary>
+        [ArgKey("rotate")]
         public DockerSwarmJoinTokenTask Rotate()
         {
-            WithArguments("rotate");
+            WithArgumentsKeyFromAttribute();
             return this;
         }
         protected override int DoExecute(ITaskContextInternal context)

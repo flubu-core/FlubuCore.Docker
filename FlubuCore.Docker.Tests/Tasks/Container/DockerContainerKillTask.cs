@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text;
 using FlubuCore.Context;
 using FlubuCore.Tasks;
+using FlubuCore.Tasks.Attributes;
 using FlubuCore.Tasks.Process;
 
 namespace FlubuCore.Tasks.Docker.Container
 {
-     public partial class DockerContainerKillTask : ExternalProcessTaskBase<DockerContainerKillTask>
+     public partial class DockerContainerKillTask : ExternalProcessTaskBase<int, DockerContainerKillTask>
      {
         private string[] _container;
 
@@ -19,7 +20,7 @@ namespace FlubuCore.Tasks.Docker.Container
         public DockerContainerKillTask(params string[] container)
         {
             ExecutablePath = "docker";
-            WithArguments("container kill");
+            WithArgumentsKeyFromAttribute();
 _container = container;
 
         }
@@ -29,9 +30,10 @@ _container = container;
         /// <summary>
         /// Signal to send to the container
         /// </summary>
+        [ArgKey("signal")]
         public DockerContainerKillTask Signal(string signal)
         {
-            WithArgumentsValueRequired("signal", signal.ToString());
+            WithArgumentsKeyFromAttribute(signal.ToString());
             return this;
         }
         protected override int DoExecute(ITaskContextInternal context)

@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text;
 using FlubuCore.Context;
 using FlubuCore.Tasks;
+using FlubuCore.Tasks.Attributes;
 using FlubuCore.Tasks.Process;
 
 namespace FlubuCore.Tasks.Docker.Config
 {
-     public partial class DockerConfigInspectTask : ExternalProcessTaskBase<DockerConfigInspectTask>
+     public partial class DockerConfigInspectTask : ExternalProcessTaskBase<int, DockerConfigInspectTask>
      {
         private string[] _config;
 
@@ -19,7 +20,7 @@ namespace FlubuCore.Tasks.Docker.Config
         public DockerConfigInspectTask(params string[] config)
         {
             ExecutablePath = "docker";
-            WithArguments("config inspect");
+            WithArgumentsKeyFromAttribute();
 _config = config;
 
         }
@@ -29,18 +30,20 @@ _config = config;
         /// <summary>
         /// Format the output using the given Go template
         /// </summary>
+        [ArgKey("format")]
         public DockerConfigInspectTask Format(string format)
         {
-            WithArgumentsValueRequired("format", format.ToString());
+            WithArgumentsKeyFromAttribute(format.ToString());
             return this;
         }
 
         /// <summary>
         /// Print the information in a human friendly format
         /// </summary>
+        [ArgKey("pretty")]
         public DockerConfigInspectTask Pretty()
         {
-            WithArguments("pretty");
+            WithArgumentsKeyFromAttribute();
             return this;
         }
         protected override int DoExecute(ITaskContextInternal context)

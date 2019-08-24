@@ -74,6 +74,7 @@ namespace FlubuCore.Docker
                     Namespace = "FlubuCore.Tasks.Docker",
                     ProjectName = "FlubuCore",
                     Methods = new List<Method>(),
+                    TaskResult = "int"
                 }; 
                 
                 task.Constructor = new Constructor

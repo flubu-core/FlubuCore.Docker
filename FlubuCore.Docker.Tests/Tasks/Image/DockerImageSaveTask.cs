@@ -7,11 +7,12 @@ using System.Collections.Generic;
 using System.Text;
 using FlubuCore.Context;
 using FlubuCore.Tasks;
+using FlubuCore.Tasks.Attributes;
 using FlubuCore.Tasks.Process;
 
 namespace FlubuCore.Tasks.Docker.Image
 {
-     public partial class DockerImageSaveTask : ExternalProcessTaskBase<DockerImageSaveTask>
+     public partial class DockerImageSaveTask : ExternalProcessTaskBase<int, DockerImageSaveTask>
      {
         private string[] _image;
 
@@ -19,7 +20,7 @@ namespace FlubuCore.Tasks.Docker.Image
         public DockerImageSaveTask(params string[] image)
         {
             ExecutablePath = "docker";
-            WithArguments("image save");
+            WithArgumentsKeyFromAttribute();
 _image = image;
 
         }
@@ -29,9 +30,10 @@ _image = image;
         /// <summary>
         /// Write to a file, instead of STDOUT
         /// </summary>
+        [ArgKey("output")]
         public DockerImageSaveTask Output(string output)
         {
-            WithArgumentsValueRequired("output", output.ToString());
+            WithArgumentsKeyFromAttribute(output.ToString());
             return this;
         }
         protected override int DoExecute(ITaskContextInternal context)
