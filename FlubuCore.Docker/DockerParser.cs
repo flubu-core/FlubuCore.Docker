@@ -133,6 +133,7 @@ namespace FlubuCore.Docker
                 method.Argument = new Argument
                 {
                     ArgumentKey = option.OptionOption.FirstCharToLower(),
+                    ArgumentKeyPrefix = "--",
                     HasArgumentValue = !option.ValueType.Equals("bool"),
                 };
 

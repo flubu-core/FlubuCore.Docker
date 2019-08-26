@@ -11,3 +11,6 @@ var generator = new FlubuCore.TaskGenerator.TaskGenerator(Context);
 //var extensions = parser.ToTaskExtensions(tasks);
 //var ext = new FlubuCore.TaskGenerator.TaskExtensionsGenerator(Context);
 //ext.GenerateTaskExtension(extensions);
+
+//var terminal = new FlubuCore.TaskGenerator.FlubuConsoleTaskGenerator(Context);
+//terminal.GenerateTasks(tasks, "DockerTerminal");

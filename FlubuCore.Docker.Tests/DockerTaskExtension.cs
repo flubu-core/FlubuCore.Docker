@@ -28,9 +28,9 @@ namespace FlubuCore.Context.FluentInterface
         {
             return new Container();
         }
-        public System.Runtime.Remoting.Contexts.Context Context ()
+        public Docker.Context Context ()
         {
-            return new System.Runtime.Remoting.Contexts.Context();
+            return new Docker.Context();
         }
         public Engine Engine ()
         {
