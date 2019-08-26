@@ -7,10 +7,10 @@ var azureItems = reader.Read();
 var parser = new FlubuCore.Docker.DockerParser();
 var tasks = parser.Parse(azureItems);
 var generator = new FlubuCore.TaskGenerator.TaskGenerator(Context);
-//generator.GenerateTasks(tasks);
-//var extensions = parser.ToTaskExtensions(tasks);
-//var ext = new FlubuCore.TaskGenerator.TaskExtensionsGenerator(Context);
-//ext.GenerateTaskExtension(extensions);
+////generator.GenerateTasks(tasks);
+////var extensions = parser.ToTaskExtensions(tasks);
+////var ext = new FlubuCore.TaskGenerator.TaskExtensionsGenerator(Context);
+////ext.GenerateTaskExtension(extensions);
 
-//var terminal = new FlubuCore.TaskGenerator.FlubuConsoleTaskGenerator(Context);
-//terminal.GenerateTasks(tasks, "DockerTerminal");
+////var terminal = new FlubuCore.TaskGenerator.FlubuConsoleTaskGenerator(Context);
+////terminal.GenerateTasks(tasks, "DockerTerminal");

@@ -95,12 +95,12 @@ namespace FlubuCore.Context.FluentInterface
                 return new DockerBuildTask(pathOrURL);
             }
 
-            public DockerCommitTask Commit(string container ,  string repository)
+            public DockerCommitTask Commit(string container ,  string repository = null)
             {
                 return new DockerCommitTask(container,  repository);
             }
 
-            public DockerCreateTask Create(string image ,  string command ,  params string[] arg)
+            public DockerCreateTask Create(string image ,  string command = null ,  params string[] arg)
             {
                 return new DockerCreateTask(image,  command,  arg);
             }
@@ -130,12 +130,12 @@ namespace FlubuCore.Context.FluentInterface
                 return new DockerHistoryTask(image);
             }
 
-            public DockerImagesTask Images(string repository)
+            public DockerImagesTask Images(string repository = null)
             {
                 return new DockerImagesTask(repository);
             }
 
-            public DockerImportTask Import(string file ,  string repository)
+            public DockerImportTask Import(string file ,  string repository = null)
             {
                 return new DockerImportTask(file,  repository);
             }
@@ -160,7 +160,7 @@ namespace FlubuCore.Context.FluentInterface
                 return new DockerLoadTask();
             }
 
-            public DockerLoginTask Login(string server)
+            public DockerLoginTask Login(string server = null)
             {
                 return new DockerLoginTask(server);
             }
@@ -200,7 +200,7 @@ namespace FlubuCore.Context.FluentInterface
                 return new DockerRmiTask(image);
             }
 
-            public DockerRunTask Run(string image ,  string command ,  params string[] arg)
+            public DockerRunTask Run(string image ,  string command = null ,  params string[] arg)
             {
                 return new DockerRunTask(image,  command,  arg);
             }
