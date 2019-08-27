@@ -28,9 +28,9 @@ namespace FlubuCore.Context.FluentInterface
         {
             return new Container();
         }
-        public Docker.Context Context ()
+        public Context Context ()
         {
-            return new Docker.Context();
+            return new Context();
         }
         public Engine Engine ()
         {
@@ -72,9 +72,9 @@ namespace FlubuCore.Context.FluentInterface
         {
             return new Swarm();
         }
-        public Docker.System System ()
+        public System System ()
         {
-            return new Docker.System();
+            return new System();
         }
         public Trust Trust ()
         {
@@ -85,160 +85,315 @@ namespace FlubuCore.Context.FluentInterface
             return new Volume();
         }
         
+            
+        /// <summary>
+        /// Attach local standard input, output, and error streams to a running container
+        /// </summary>
             public DockerAttachTask Attach(string container)
             {
                 return new DockerAttachTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Build an image from a Dockerfile
+        /// </summary>
             public DockerBuildTask Build(string pathOrURL)
             {
                 return new DockerBuildTask(pathOrURL);
             }
 
+
+            
+        /// <summary>
+        /// Create a new image from a container's changes
+        /// </summary>
             public DockerCommitTask Commit(string container ,  string repository = null)
             {
                 return new DockerCommitTask(container,  repository);
             }
 
+
+            
+        /// <summary>
+        /// Create a new container
+        /// </summary>
             public DockerCreateTask Create(string image ,  string command = null ,  params string[] arg)
             {
                 return new DockerCreateTask(image,  command,  arg);
             }
 
+
+            
+        /// <summary>
+        /// Deploy a new stack or update an existing stack
+        /// </summary>
             public DockerDeployTask Deploy(string stack)
             {
                 return new DockerDeployTask(stack);
             }
 
+
+            
+        /// <summary>
+        /// Get real time events from the server
+        /// </summary>
             public DockerEventsTask Events()
             {
                 return new DockerEventsTask();
             }
 
+
+            
+        /// <summary>
+        /// Run a command in a running container
+        /// </summary>
             public DockerExecTask Exec(string container ,  string command ,  params string[] arg)
             {
                 return new DockerExecTask(container,  command,  arg);
             }
 
+
+            
+        /// <summary>
+        /// Export a container's filesystem as a tar archive
+        /// </summary>
             public DockerExportTask Export(string container)
             {
                 return new DockerExportTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Show the history of an image
+        /// </summary>
             public DockerHistoryTask History(string image)
             {
                 return new DockerHistoryTask(image);
             }
 
+
+            
+        /// <summary>
+        /// List images
+        /// </summary>
             public DockerImagesTask Images(string repository = null)
             {
                 return new DockerImagesTask(repository);
             }
 
+
+            
+        /// <summary>
+        /// Import the contents from a tarball to create a filesystem image
+        /// </summary>
             public DockerImportTask Import(string file ,  string repository = null)
             {
                 return new DockerImportTask(file,  repository);
             }
 
+
+            
+        /// <summary>
+        /// Display system-wide information
+        /// </summary>
             public DockerInfoTask Info()
             {
                 return new DockerInfoTask();
             }
 
+
+            
+        /// <summary>
+        /// Return low-level information on Docker objects
+        /// </summary>
             public DockerInspectTask Inspect(params string[] name)
             {
                 return new DockerInspectTask(name);
             }
 
+
+            
+        /// <summary>
+        /// Kill one or more running containers
+        /// </summary>
             public DockerKillTask Kill(params string[] container)
             {
                 return new DockerKillTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Load an image from a tar archive or STDIN
+        /// </summary>
             public DockerLoadTask Load()
             {
                 return new DockerLoadTask();
             }
 
+
+            
+        /// <summary>
+        /// Log in to a Docker registry
+        /// </summary>
             public DockerLoginTask Login(string server = null)
             {
                 return new DockerLoginTask(server);
             }
 
+
+            
+        /// <summary>
+        /// Fetch the logs of a container
+        /// </summary>
             public DockerLogsTask Logs(string container)
             {
                 return new DockerLogsTask(container);
             }
 
+
+            
+        /// <summary>
+        /// List containers
+        /// </summary>
             public DockerPsTask Ps()
             {
                 return new DockerPsTask();
             }
 
+
+            
+        /// <summary>
+        /// Pull an image or a repository from a registry
+        /// </summary>
             public DockerPullTask Pull(string name)
             {
                 return new DockerPullTask(name);
             }
 
+
+            
+        /// <summary>
+        /// Push an image or a repository to a registry
+        /// </summary>
             public DockerPushTask Push(string name)
             {
                 return new DockerPushTask(name);
             }
 
+
+            
+        /// <summary>
+        /// Restart one or more containers
+        /// </summary>
             public DockerRestartTask Restart(params string[] container)
             {
                 return new DockerRestartTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Remove one or more containers
+        /// </summary>
             public DockerRmTask Rm(params string[] container)
             {
                 return new DockerRmTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Remove one or more images
+        /// </summary>
             public DockerRmiTask Rmi(params string[] image)
             {
                 return new DockerRmiTask(image);
             }
 
+
+            
+        /// <summary>
+        /// Run a command in a new container
+        /// </summary>
             public DockerRunTask Run(string image ,  string command = null ,  params string[] arg)
             {
                 return new DockerRunTask(image,  command,  arg);
             }
 
+
+            
+        /// <summary>
+        /// Save one or more images to a tar archive (streamed to STDOUT by default)
+        /// </summary>
             public DockerSaveTask Save(params string[] image)
             {
                 return new DockerSaveTask(image);
             }
 
+
+            
+        /// <summary>
+        /// Search the Docker Hub for images
+        /// </summary>
             public DockerSearchTask Search(string term)
             {
                 return new DockerSearchTask(term);
             }
 
+
+            
+        /// <summary>
+        /// Start one or more stopped containers
+        /// </summary>
             public DockerStartTask Start(params string[] container)
             {
                 return new DockerStartTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Display a live stream of container(s) resource usage statistics
+        /// </summary>
             public DockerStatsTask Stats(params string[] container)
             {
                 return new DockerStatsTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Stop one or more running containers
+        /// </summary>
             public DockerStopTask Stop(params string[] container)
             {
                 return new DockerStopTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Update configuration of one or more containers
+        /// </summary>
             public DockerUpdateTask Update(params string[] container)
             {
                 return new DockerUpdateTask(container);
             }
 
+
+            
+        /// <summary>
+        /// Show the Docker version information
+        /// </summary>
             public DockerVersionTask Version()
             {
                 return new DockerVersionTask();
             }
+
         
     }
 }

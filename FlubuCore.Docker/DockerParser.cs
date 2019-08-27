@@ -57,6 +57,7 @@ namespace FlubuCore.Docker
             return new ExtensionMethod
             {
                 TaskName = task.TaskName,
+                TaskDescription = task.TaskDescription,
                 MethodName = task.TaskName.RemoveFromBeginning("Docker").RemoveFromEnd("Task"),
                 Parameters = task.Constructor.Arguments?.Select(x => x.Parameter).Where(x => x != null).ToList(),
             };
@@ -74,7 +75,8 @@ namespace FlubuCore.Docker
                     Namespace = "FlubuCore.Tasks.Docker",
                     ProjectName = "FlubuCore",
                     Methods = new List<Method>(),
-                    TaskResult = "int"
+                    TaskResult = "int",
+                    TaskDescription = docker.Short
                 }; 
                 
                 task.Constructor = new Constructor
@@ -104,7 +106,6 @@ namespace FlubuCore.Docker
                 });
 
                 task.TaskName = $"{string.Join(string.Empty, splitedName)}Task";
-                
                 task.FileName = $"Tasks{path}\\{task.TaskName}.cs";
                 if (docker.Options == null)
                 {
