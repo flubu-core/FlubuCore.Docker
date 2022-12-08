@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="FlubuCore" Version="4.1.2" />
-    <PackageReference Include="Newtonsoft.Json" Version="11.0.2" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
     <PackageReference Include="YamlDotNet" Version="5.2.1" />
   </ItemGroup>
 
